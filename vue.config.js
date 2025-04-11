@@ -16,7 +16,8 @@ if (NODE_ENV === 'cdn') {
   if (cdnVersionList.includes(version)) {
     throw new Error(`cdn 版本 ${version} 已存在`)
   }
-  publicPath = `https://cdn.jsdelivr.net/gh/nayacco/workflow-bpmn-modeler@${version}/docs/cdn/${version}/`
+  //https://github.com/MaksymYaremenko3000/flowable-modeler/tree/${version}/docs/cdn/${version}/
+  publicPath = `https://github.com/MaksymYaremenko3000/flowable-modeler/tree/${version}/docs/cdn/${version}/`
   outputDir = `docs/cdn/${version}`
   appFileName = 'Lib'
 }

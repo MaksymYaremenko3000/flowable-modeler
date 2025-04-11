@@ -12,7 +12,7 @@
     />
   </div>
 </template>
-chunk-elementUI
+请选择
 <script>
 import taskPanel from './components/nodePanel/task'
 import startEndPanel from './components/nodePanel/startEnd'
