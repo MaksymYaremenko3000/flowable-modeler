@@ -3,26 +3,26 @@
     <x-form ref="xForm" v-model="formData" :config="formConfig">
       <template #executionListener>
         <el-badge :value="executionListenerLength">
-          <el-button size="small" @click="dialogName = 'executionListenerDialog'">编辑</el-button>
+          <el-button size="small" @click="dialogName = 'executionListenerDialog'">Edit</el-button>
         </el-badge>
       </template>
       <template #signal>
         <el-badge :value="signalLength">
-          <el-button size="small" @click="dialogName = 'signalDialog'">编辑</el-button>
+          <el-button size="small" @click="dialogName = 'signalDialog'">Edit</el-button>
         </el-badge>
       </template>
     </x-form>
     <executionListenerDialog
-      v-if="dialogName === 'executionListenerDialog'"
-      :element="element"
-      :modeler="modeler"
-      @close="finishExecutionListener"
+        v-if="dialogName === 'executionListenerDialog'"
+        :element="element"
+        :modeler="modeler"
+        @close="finishExecutionListener"
     />
     <signalDialog
-      v-if="dialogName === 'signalDialog'"
-      :element="element"
-      :modeler="modeler"
-      @close="finishExecutionListener"
+        v-if="dialogName === 'signalDialog'"
+        :element="element"
+        :modeler="modeler"
+        @close="finishExecutionListener"
     />
   </div>
 </template>
@@ -32,6 +32,7 @@ import mixinPanel from '../../common/mixinPanel'
 import mixinExecutionListener from '../../common/mixinExecutionListener'
 import signalDialog from './property/signal'
 import { commonParse } from '../../common/parseElement'
+
 export default {
   components: {
     signalDialog
@@ -52,41 +53,41 @@ export default {
           {
             xType: 'select',
             name: 'processCategory',
-            label: '流程分类',
+            label: 'Process Category',
             dic: { data: _this.categorys, label: 'name', value: 'id' }
           },
           {
             xType: 'input',
             name: 'id',
-            label: '流程标识key',
-            rules: [{ required: true, message: 'Id 不能为空' }]
+            label: 'Process Key',
+            rules: [{ required: true, message: 'ID cannot be empty' }]
           },
           {
             xType: 'input',
             name: 'name',
-            label: '流程名称'
+            label: 'Process Name'
           },
           {
             xType: 'input',
             name: 'documentation',
-            label: '节点描述'
+            label: 'Node Description'
           },
           {
             xType: 'slot',
             name: 'executionListener',
-            label: '执行监听器'
+            label: 'Execution Listener'
           },
           {
             xType: 'slot',
             name: 'signal',
-            label: '信号定义'
+            label: 'Signal Definition'
           }
         ]
       }
     }
   },
   watch: {
-    'formData.processCategory': function(val) {
+    'formData.processCategory': function (val) {
       if (val === '') val = null
       this.updateProperties({ 'flowable:processCategory': val })
     }
@@ -109,5 +110,4 @@ export default {
 </script>
 
 <style>
-
 </style>

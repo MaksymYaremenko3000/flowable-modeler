@@ -3,15 +3,15 @@
     <x-form ref="xForm" v-model="formData" :config="formConfig">
       <template #executionListener>
         <el-badge :value="executionListenerLength">
-          <el-button size="small" @click="dialogName = 'executionListenerDialog'">编辑</el-button>
+          <el-button size="small" @click="dialogName = 'executionListenerDialog'">Edit</el-button>
         </el-badge>
       </template>
     </x-form>
     <executionListenerDialog
-      v-if="dialogName === 'executionListenerDialog'"
-      :element="element"
-      :modeler="modeler"
-      @close="finishExecutionListener"
+        v-if="dialogName === 'executionListenerDialog'"
+        :element="element"
+        :modeler="modeler"
+        @close="finishExecutionListener"
     />
   </div>
 </template>
@@ -20,6 +20,7 @@
 import mixinPanel from '../../common/mixinPanel'
 import mixinExecutionListener from '../../common/mixinExecutionListener'
 import { commonParse } from '../../common/parseElement'
+
 export default {
   mixins: [mixinPanel, mixinExecutionListener],
   data() {
@@ -36,34 +37,34 @@ export default {
           {
             xType: 'input',
             name: 'id',
-            label: '节点 id',
-            rules: [{ required: true, message: 'Id 不能为空' }]
+            label: 'Node ID',
+            rules: [{ required: true, message: 'ID cannot be empty' }]
           },
           {
             xType: 'input',
             name: 'name',
-            label: '节点名称'
+            label: 'Node Name'
           },
           {
             xType: 'input',
             name: 'documentation',
-            label: '节点描述'
+            label: 'Node Description'
           },
           {
             xType: 'slot',
             name: 'executionListener',
-            label: '执行监听器'
+            label: 'Execution Listener'
           },
           {
             xType: 'input',
             name: 'initiator',
-            label: '发起人',
+            label: 'Initiator',
             show: !!_this.showConfig.initiator
           },
           {
             xType: 'input',
             name: 'formKey',
-            label: '表单标识key',
+            label: 'Form Key',
             show: !!_this.showConfig.formKey
           }
         ]
@@ -71,11 +72,11 @@ export default {
     }
   },
   watch: {
-    'formData.initiator': function(val) {
+    'formData.initiator': function (val) {
       if (val === '') val = null
       this.updateProperties({ 'flowable:initiator': val })
     },
-    'formData.formKey': function(val) {
+    'formData.formKey': function (val) {
       if (val === '') val = null
       this.updateProperties({ 'flowable:formKey': val })
     }
@@ -87,5 +88,4 @@ export default {
 </script>
 
 <style>
-
 </style>

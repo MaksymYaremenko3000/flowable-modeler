@@ -2,24 +2,24 @@
   <div ref="propertyPanel" class="property-panel">
     <div v-if="nodeName" class="node-name">{{ nodeName }}</div>
     <component
-      :is="getComponent"
-      v-if="element"
-      :element="element"
-      :modeler="modeler"
-      :users="users"
-      :groups="groups"
-      :categorys="categorys"
+        :is="getComponent"
+        v-if="element"
+        :element="element"
+        :modeler="modeler"
+        :users="users"
+        :groups="groups"
+        :categorys="categorys"
     />
   </div>
 </template>
-
+chunk-elementUI
 <script>
 import taskPanel from './components/nodePanel/task'
 import startEndPanel from './components/nodePanel/startEnd'
 import processPanel from './components/nodePanel/process'
 import sequenceFlowPanel from './components/nodePanel/sequenceFlow'
 import gatewayPanel from './components/nodePanel/gateway'
-import { NodeName } from './lang/zh'
+import { NodeName } from './lang/eng'
 
 export default {
   name: 'PropertyPanel',
@@ -51,9 +51,9 @@ export default {
         color: null
       },
       roles: [
-        { value: 'manager', label: '经理' },
-        { value: 'personnel', label: '人事' },
-        { value: 'charge', label: '主管' }
+        { value: 'manager', label: 'Manager' },
+        { value: 'personnel', label: 'HR' },
+        { value: 'charge', label: 'Supervisor' }
       ]
     }
   },
@@ -72,8 +72,6 @@ export default {
         'bpmn:BusinessRuleTask',
         'bpmn:ServiceTask',
         'bpmn:ScriptTask'
-        // 'bpmn:CallActivity',
-        // 'bpmn:SubProcess'
       ].includes(type)) {
         return 'taskPanel'
       }
@@ -97,8 +95,8 @@ export default {
       if (this.element) {
         const bizObj = this.element.businessObject
         const type = bizObj?.eventDefinitions
-          ? bizObj.eventDefinitions[0].$type
-          : bizObj.$type
+            ? bizObj.eventDefinitions[0].$type
+            : bizObj.$type
         return NodeName[type] || type
       }
       return ''
@@ -125,7 +123,6 @@ export default {
         }
       })
       this.modeler.on('selection.changed', e => {
-        // hack 同类型面板不刷新
         this.element = null
         const element = e.newSelection[0]
         if (element) {
@@ -142,7 +139,6 @@ export default {
 <style lang="scss">
 .property-panel {
   padding: 20px 20px;
-  // reset element css
   .el-form--label-top .el-form-item__label {
     padding: 0;
   }
@@ -152,7 +148,7 @@ export default {
   .tab-table .el-form-item {
     margin-bottom: 16px;
   }
-  .node-name{
+  .node-name {
     border-bottom: 1px solid #ccc;
     padding: 0 0 10px 20px;
     margin-bottom: 10px;

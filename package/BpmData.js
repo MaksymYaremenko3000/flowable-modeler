@@ -1,9 +1,9 @@
 /**
- * 存储流程设计相关参数
+ * Stores parameters related to the process designer
  */
 export default class BpmData {
   constructor() {
-    this.controls = [] // 设计器控件
+    this.controls = [] // Designer controls
     this.init()
   }
 
@@ -11,56 +11,56 @@ export default class BpmData {
     this.controls = [
       {
         action: 'create.start-event',
-        title: '开始'
+        title: 'Start Event'
       },
       {
         action: 'create.intermediate-event',
-        title: '中间'
+        title: 'Intermediate Event'
       },
       {
         action: 'create.end-event',
-        title: '结束'
+        title: 'End Event'
       },
       {
         action: 'create.exclusive-gateway',
-        title: '网关'
+        title: 'Gateway'
       },
       {
         action: 'create.task',
-        title: '任务'
+        title: 'Task'
       },
       {
         action: 'create.user-task',
-        title: '用户任务'
+        title: 'User Task'
       },
       {
         action: 'create.user-sign-task',
-        title: '会签任务'
+        title: 'Multi-User Task'
       },
       {
         action: 'create.subprocess-expanded',
-        title: '子流程'
+        title: 'Sub Process'
       },
       {
         action: 'create.data-object',
-        title: '数据对象'
+        title: 'Data Object'
       },
       {
         action: 'create.data-store',
-        title: '数据存储'
+        title: 'Data Store'
       },
       {
         action: 'create.participant-expanded',
-        title: '扩展流程'
+        title: 'Expanded Process'
       },
       {
         action: 'create.group',
-        title: '分组'
+        title: 'Group'
       }
     ]
   }
 
-  //  获取控件配置信息
+  // Get control config by action
   getControl(action) {
     const result = this.controls.filter(item => item.action === action)
     return result[0] || {}

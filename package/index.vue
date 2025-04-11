@@ -1,37 +1,37 @@
 <template>
   <div v-loading="isView" class="flow-containers" :class="{ 'view-mode': isView }">
     <el-container style="height: 100%">
-      <el-header style="border-bottom: 1px solid rgb(218 218 218);height: auto;">
+      <el-header style="border-bottom: 1px solid rgb(218 218 218); height: auto;">
         <div style="display: flex; padding: 10px 0px; justify-content: space-between;">
           <div>
             <el-upload action="" :before-upload="openBpmn" style="margin-right: 10px; display:inline-block;">
-              <el-tooltip effect="dark" content="加载xml" placement="bottom">
+              <el-tooltip effect="dark" content="Load XML" placement="bottom">
                 <el-button size="mini" icon="el-icon-folder-opened" />
               </el-tooltip>
             </el-upload>
-            <el-tooltip effect="dark" content="新建" placement="bottom">
+            <el-tooltip effect="dark" content="New Diagram" placement="bottom">
               <el-button size="mini" icon="el-icon-circle-plus" @click="newDiagram" />
             </el-tooltip>
-            <el-tooltip effect="dark" content="自适应屏幕" placement="bottom">
+            <el-tooltip effect="dark" content="Fit to Screen" placement="bottom">
               <el-button size="mini" icon="el-icon-rank" @click="fitViewport" />
             </el-tooltip>
-            <el-tooltip effect="dark" content="放大" placement="bottom">
+            <el-tooltip effect="dark" content="Zoom In" placement="bottom">
               <el-button size="mini" icon="el-icon-zoom-in" @click="zoomViewport(true)" />
             </el-tooltip>
-            <el-tooltip effect="dark" content="缩小" placement="bottom">
+            <el-tooltip effect="dark" content="Zoom Out" placement="bottom">
               <el-button size="mini" icon="el-icon-zoom-out" @click="zoomViewport(false)" />
             </el-tooltip>
-            <el-tooltip effect="dark" content="后退" placement="bottom">
+            <el-tooltip effect="dark" content="Undo" placement="bottom">
               <el-button size="mini" icon="el-icon-back" @click="modeler.get('commandStack').undo()" />
             </el-tooltip>
-            <el-tooltip effect="dark" content="前进" placement="bottom">
+            <el-tooltip effect="dark" content="Redo" placement="bottom">
               <el-button size="mini" icon="el-icon-right" @click="modeler.get('commandStack').redo()" />
             </el-tooltip>
           </div>
           <div>
-            <el-button size="mini" icon="el-icon-download" @click="saveXML(true)">下载xml</el-button>
-            <el-button size="mini" icon="el-icon-picture" @click="saveImg('svg', true)">下载svg</el-button>
-            <el-button size="mini" type="primary" @click="save">保存模型</el-button>
+            <el-button size="mini" icon="el-icon-download" @click="saveXML(true)">Download XML</el-button>
+            <el-button size="mini" icon="el-icon-picture" @click="saveImg('svg', true)">Download SVG</el-button>
+            <el-button size="mini" type="primary" @click="save">Save Model</el-button>
           </div>
         </div>
       </el-header>
@@ -44,19 +44,18 @@
         </el-aside>
       </el-container>
     </el-container>
-
   </div>
 </template>
 
 <script>
-// 汉化
-import customTranslate from './common/customTranslate'
+// Localization
 import Modeler from 'bpmn-js/lib/Modeler'
 import panel from './PropertyPanel'
 import BpmData from './BpmData'
 import getInitStr from './flowable/init'
-// 引入flowable的节点文件
 import flowableModdle from './flowable/flowable.json'
+//import CreateAppendAnythingModule from 'bpmn-js-create-append-anything'
+
 export default {
   name: 'WorkflowBpmnModeler',
   components: {
@@ -92,26 +91,20 @@ export default {
     }
   },
   watch: {
-    xml: function(val) {
+    xml(val) {
       if (val) {
         this.createNewDiagram(val)
       }
     }
   },
   mounted() {
-    // 生成实例
     this.modeler = new Modeler({
       container: this.$refs.canvas,
-      additionalModules: [
-        {
-          translate: ['value', customTranslate]
-        }
-      ],
+      //additionalModules: [CreateAppendAnythingModule],
       moddleExtensions: {
         flowable: flowableModdle
       }
     })
-    // 新增流程定义
     if (!this.xml) {
       this.newDiagram()
     } else {
@@ -122,7 +115,6 @@ export default {
     newDiagram() {
       this.createNewDiagram(getInitStr())
     },
-    // 让图能自适应屏幕
     fitViewport() {
       this.zoom = this.modeler.get('canvas').zoom('fit-viewport')
       const bbox = document.querySelector('.flow-containers .viewport').getBBox()
@@ -137,17 +129,14 @@ export default {
         width: currentViewbox.width,
         height: currentViewbox.height
       })
-      this.zoom = bbox.width / currentViewbox.width * 1.8
+      this.zoom = (bbox.width / currentViewbox.width) * 1.8
     },
-    // 放大缩小
     zoomViewport(zoomIn = true) {
       this.zoom = this.modeler.get('canvas').zoom()
       this.zoom += (zoomIn ? 0.1 : -0.1)
       this.modeler.get('canvas').zoom(this.zoom)
     },
     async createNewDiagram(data) {
-      // 将字符串转换成图显示出来
-      // data = data.replace(/<!\[CDATA\[(.+?)]]>/g, '&lt;![CDATA[$1]]&gt;')
       data = data.replace(/<!\[CDATA\[(.+?)]]>/g, function(match, str) {
         return str.replace(/</g, '&lt;')
       })
@@ -155,15 +144,12 @@ export default {
         await this.modeler.importXML(data)
         this.adjustPalette()
         this.fitViewport()
-        // this.fillColor()
       } catch (err) {
         console.error(err.message, err.warnings)
       }
     },
-    // 调整左侧工具栏排版
     adjustPalette() {
       try {
-        // 获取 bpmn 设计器实例
         const canvas = this.$refs.canvas
         const djsPalette = canvas.children[0].children[1].children[4]
         const djsPalStyle = {
@@ -173,16 +159,15 @@ export default {
           left: '20px',
           borderRadius: 0
         }
-        for (var key in djsPalStyle) {
+        for (let key in djsPalStyle) {
           djsPalette.style[key] = djsPalStyle[key]
         }
         const palette = djsPalette.children[0]
         const allGroups = palette.children
-        allGroups[0].style['display'] = 'none'
-        // 修改控件样式
-        for (var gKey in allGroups) {
+        allGroups[0].style.display = 'none'
+        for (let gKey in allGroups) {
           const group = allGroups[gKey]
-          for (var cKey in group.children) {
+          for (let cKey in group.children) {
             const control = group.children[cKey]
             const controlStyle = {
               display: 'flex',
@@ -192,17 +177,13 @@ export default {
               padding: '5px'
             }
             if (
-              control.className &&
-              control.dataset &&
-              control.className.indexOf('entry') !== -1
+                control.className &&
+                control.dataset &&
+                control.className.indexOf('entry') !== -1
             ) {
-              const controlProps = new BpmData().getControl(
-                control.dataset.action
-              )
-              control.innerHTML = `<div style='font-size: 14px;font-weight:500;margin-left:15px;'>${
-                controlProps['title']
-              }</div>`
-              for (var csKey in controlStyle) {
+              const controlProps = new BpmData().getControl(control.dataset.action)
+              control.innerHTML = `<div style='font-size: 14px;font-weight:500;margin-left:15px;'>${controlProps['title']}</div>`
+              for (let csKey in controlStyle) {
                 control.style[csKey] = controlStyle[csKey]
               }
             }
@@ -226,7 +207,6 @@ export default {
               if (targetTask) {
                 canvas.addMarker(nn.id, targetTask.completed ? 'highlight' : 'highlight-todo')
               } else if (nn.targetRef.$type === 'bpmn:ExclusiveGateway') {
-                // canvas.addMarker(nn.id, 'highlight');
                 canvas.addMarker(nn.id, completeTask.completed ? 'highlight' : 'highlight-todo')
                 canvas.addMarker(nn.targetRef.id, completeTask.completed ? 'highlight' : 'highlight-todo')
               } else if (nn.targetRef.$type === 'bpmn:EndEvent') {
@@ -255,13 +235,11 @@ export default {
             if (completeTask) {
               canvas.addMarker(nn.id, 'highlight')
               canvas.addMarker(n.id, 'highlight')
-              return
             }
           })
         }
       })
     },
-    // 对外 api
     getProcess() {
       const element = this.getProcessElement()
       return {
@@ -315,8 +293,8 @@ export default {
       return false
     },
     downloadFile(filename, data, type) {
-      var a = document.createElement('a')
-      var url = window.URL.createObjectURL(new Blob([data], { type: type }))
+      const a = document.createElement('a')
+      const url = window.URL.createObjectURL(new Blob([data], { type }))
       a.href = url
       a.download = filename
       a.click()
@@ -327,11 +305,11 @@ export default {
 </script>
 
 <style lang="scss">
-/*左边工具栏以及编辑节点的样式*/
 @import "~bpmn-js/dist/assets/diagram-js.css";
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn.css";
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn-codes.css";
 @import "~bpmn-js/dist/assets/bpmn-font/css/bpmn-embedded.css";
+
 .view-mode {
   .el-header, .el-aside, .djs-palette, .bjs-powered-by {
     display: none;
@@ -344,7 +322,6 @@ export default {
   }
 }
 .flow-containers {
-  // background-color: #ffffff;
   width: 100%;
   height: 100%;
   .canvas {
@@ -360,63 +337,16 @@ export default {
   .load {
     margin-right: 10px;
   }
-  .el-form-item__label{
+  .el-form-item__label {
     font-size: 13px;
   }
-
-  .djs-palette{
-    left: 0px!important;
+  .djs-palette {
+    left: 0px !important;
     top: 0px;
     border-top: none;
   }
-
   .djs-container svg {
     min-height: 650px;
   }
-
-  // .highlight.djs-shape .djs-visual > :nth-child(1) {
-  //   fill: green !important;
-  //   stroke: green !important;
-  //   fill-opacity: 0.2 !important;
-  // }
-  // .highlight.djs-shape .djs-visual > :nth-child(2) {
-  //   fill: green !important;
-  // }
-  // .highlight.djs-shape .djs-visual > path {
-  //   fill: green !important;
-  //   fill-opacity: 0.2 !important;
-  //   stroke: green !important;
-  // }
-  // .highlight.djs-connection > .djs-visual > path {
-  //   stroke: green !important;
-  // }
-  // // .djs-connection > .djs-visual > path {
-  // //   stroke: orange !important;
-  // //   stroke-dasharray: 4px !important;
-  // //   fill-opacity: 0.2 !important;
-  // // }
-  // // .djs-shape .djs-visual > :nth-child(1) {
-  // //   fill: orange !important;
-  // //   stroke: orange !important;
-  // //   stroke-dasharray: 4px !important;
-  // //   fill-opacity: 0.2 !important;
-  // // }
-  // .highlight-todo.djs-connection > .djs-visual > path {
-  //   stroke: orange !important;
-  //   stroke-dasharray: 4px !important;
-  //   fill-opacity: 0.2 !important;
-  // }
-  // .highlight-todo.djs-shape .djs-visual > :nth-child(1) {
-  //   fill: orange !important;
-  //   stroke: orange !important;
-  //   stroke-dasharray: 4px !important;
-  //   fill-opacity: 0.2 !important;
-  // }
-  // .overlays-div {
-  //   font-size: 10px;
-  //   color: red;
-  //   width: 100px;
-  //   top: -20px !important;
-  // }
 }
 </style>

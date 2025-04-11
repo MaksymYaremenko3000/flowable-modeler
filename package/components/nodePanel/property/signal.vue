@@ -1,17 +1,17 @@
 <template>
   <div>
     <el-dialog
-      title="信号定义"
-      :visible.sync="dialogVisible"
-      width="700px"
-      :close-on-click-modal="false"
-      :close-on-press-escape="false"
-      :show-close="false"
-      @closed="$emit('close')"
+        title="Signal Definition"
+        :visible.sync="dialogVisible"
+        width="700px"
+        :close-on-click-modal="false"
+        :close-on-press-escape="false"
+        :show-close="false"
+        @closed="$emit('close')"
     >
       <x-form ref="xForm" v-model="formData" :config="formConfig" />
       <span slot="footer" class="dialog-footer">
-        <el-button type="primary" size="medium" @click="closeDialog">确 定</el-button>
+        <el-button type="primary" size="medium" @click="closeDialog">Confirm</el-button>
       </span>
     </el-dialog>
   </div>
@@ -31,7 +31,6 @@ export default {
   },
   computed: {
     formConfig() {
-    //   const _this = this
       return {
         inline: false,
         item: [
@@ -39,32 +38,32 @@ export default {
             xType: 'tabs',
             tabs: [
               {
-                label: '信号定义',
+                label: 'Signal Definition',
                 name: 'signal',
                 column: [
                   {
-                    label: 'scope',
+                    label: 'Scope',
                     name: 'scope',
                     width: 180,
-                    rules: [{ required: true, message: '请选择', trigger: ['blur', 'change'] }],
+                    rules: [{ required: true, message: 'Please select', trigger: ['blur', 'change'] }],
                     xType: 'select',
                     dic: [
-                      { label: '全局', value: 'start' },
-                      { label: '流程实例', value: 'end' }
+                      { label: 'Global', value: 'start' },
+                      { label: 'Process Instance', value: 'end' }
                     ]
                   },
                   {
-                    label: 'id',
+                    label: 'ID',
                     name: 'id',
                     width: 200,
-                    rules: [{ required: true, message: '请输入', trigger: ['blur', 'change'] }],
+                    rules: [{ required: true, message: 'Please enter', trigger: ['blur', 'change'] }],
                     xType: 'input'
                   },
                   {
-                    label: '名称',
+                    label: 'Name',
                     name: 'name',
                     xType: 'input',
-                    rules: [{ required: true, message: '请输入', trigger: ['blur', 'change'] }]
+                    rules: [{ required: true, message: 'Please enter', trigger: ['blur', 'change'] }]
                   }
                 ]
               }
@@ -75,6 +74,7 @@ export default {
     }
   },
   mounted() {
+    // Uncomment and customize if you plan to pre-fill signal definitions
     // this.formData.signal = this.element.businessObject.extensionElements?.values.map(item => {
     //   let type
     //   if ('class' in item.$attrs) type = 'class'
@@ -96,8 +96,7 @@ export default {
         }
         const length = extensionElements.get('values').length
         for (let i = 0; i < length; i++) {
-          // 清除旧值
-          extensionElements.get('values').pop()
+          extensionElements.get('values').pop() // Clear old values
         }
         this.updateProperties({ extensionElements: extensionElements })
       } else {
@@ -118,7 +117,7 @@ export default {
 </script>
 
 <style>
-.flow-containers  .el-badge__content.is-fixed {
-    top: 18px;
+.flow-containers .el-badge__content.is-fixed {
+  top: 18px;
 }
 </style>

@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <bpmn-modeler
-      ref="refNode"
-      :xml="xml"
-      :users="users"
-      :groups="groups"
-      :categorys="categorys"
-      :is-view="false"
-      @save="saveModeler"
+        ref="refNode"
+        :xml="xml"
+        :users="users"
+        :groups="groups"
+        :categorys="categorys"
+        :is-view="false"
+        @save="saveModeler"
     />
   </div>
 </template>
@@ -20,20 +20,20 @@ export default {
   },
   data() {
     return {
-      xml: '', // 后端查询到的xml
+      xml: '', // XML fetched from backend
       users: [
-        { name: '张三', id: 'zhangsan' },
-        { name: '李四', id: 'lisi' },
-        { name: '王五', id: 'wangwu' }
+        { name: 'Zhang San', id: 'zhangsan' },
+        { name: 'Li Si', id: 'lisi' },
+        { name: 'Wang Wu', id: 'wangwu' }
       ],
       groups: [
-        { name: 'web组', id: 'web' },
-        { name: 'java组', id: 'java' },
-        { name: 'python组', id: 'python' }
+        { name: 'Web Team', id: 'web' },
+        { name: 'Java Team', id: 'java' },
+        { name: 'Python Team', id: 'python' }
       ],
       categorys: [
         { name: 'OA', id: 'oa' },
-        { name: '财务', id: 'finance' }
+        { name: 'Finance', id: 'finance' }
       ]
     }
   },
@@ -42,12 +42,12 @@ export default {
   },
   methods: {
     getModelDetail() {
-      fetch('https://cdn.jsdelivr.net/gh/nayacco/workflow-bpmn-modeler@master/src/Leave.bpmn20.xml')
-        .then(response => {
-          return response.text()
-        }).then(xml => {
-          this.xml = xml
-        })
+      fetch('/Leave.bpmn20.xml')
+          .then(response => {
+            return response.text()
+          }).then(xml => {
+        this.xml = xml
+      })
     },
     saveModeler(data) {
       console.log(data)
@@ -58,7 +58,6 @@ export default {
 
 <style lang="scss">
 html, body, #app {
-  // height: 650px;
   margin: 0;
 }
 </style>

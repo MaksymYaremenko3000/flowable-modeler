@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:flowable="http://flowable.org/bpmn" targetNamespace="http://www.flowable.org/processdef">
-  <process id="LeaveApplication" name="请假申请" flowable:processCategory="oa">
-    <startEvent id="startNode1" name="开始">
+  <process id="LeaveApplication" name="Leave Request" flowable:processCategory="oa">
+    <startEvent id="startNode1" name="Start">
       <outgoing>Flow_1i6ntl4</outgoing>
     </startEvent>
     <sequenceFlow id="Flow_1i6ntl4" sourceRef="startNode1" targetRef="Activity_02v0kq2" />
-    <userTask id="Activity_02v0kq2" name="一级审批" flowable:formKey="Approve:Level1" flowable:assignee="${approverId}">
+    <userTask id="Activity_02v0kq2" name="Level 1 Approval" flowable:formKey="Approve:Level1" flowable:assignee="${approverId}">
       <incoming>Flow_1i6ntl4</incoming>
       <incoming>Flow_1n4cqa6</incoming>
       <outgoing>Flow_101x41f</outgoing>
@@ -19,7 +19,7 @@
     <sequenceFlow id="Flow_1oexhjd" sourceRef="Gateway_1mdfbn1" targetRef="Activity_0pbabwd">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${status == 'approve'}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="Activity_0pbabwd" name="二级审批" flowable:formKey="Approve:Level2" flowable:candidateUsers="zhangsan,lisi">
+    <userTask id="Activity_0pbabwd" name="Level 2 Approval" flowable:formKey="Approve:Level2" flowable:candidateUsers="zhangsan,lisi">
       <incoming>Flow_1oexhjd</incoming>
       <outgoing>Flow_0oidzit</outgoing>
     </userTask>
@@ -29,13 +29,13 @@
       <outgoing>Flow_0ubisbp</outgoing>
     </exclusiveGateway>
     <sequenceFlow id="Flow_0oidzit" sourceRef="Activity_0pbabwd" targetRef="Gateway_01lgsw5" />
-    <endEvent id="Event_1mqklz0" name="结束">
+    <endEvent id="Event_1mqklz0" name="End">
       <incoming>Flow_1mqv4d2</incoming>
     </endEvent>
     <sequenceFlow id="Flow_1mqv4d2" sourceRef="Gateway_01lgsw5" targetRef="Event_1mqklz0">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${status == 'approve'}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="Activity_15gykiz" name="修改填报">
+    <userTask id="Activity_15gykiz" name="Modify and Resubmit">
       <incoming>Flow_0ms36c0</incoming>
       <incoming>Flow_0ubisbp</incoming>
       <outgoing>Flow_1n4cqa6</outgoing>
