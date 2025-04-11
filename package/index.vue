@@ -181,8 +181,8 @@ export default {
                 control.dataset &&
                 control.className.indexOf('entry') !== -1
             ) {
-              const controlProps = new BpmData().getControl(control.dataset.action)
-              control.innerHTML = `<div style='font-size: 14px;font-weight:500;margin-left:15px;'>${controlProps['title']}</div>`
+              //const controlProps = new BpmData().getControl(control.dataset.action)
+              control.innerHTML = `<div style='font-size: 14px;font-weight:500;margin-left:15px;'/>`
               for (let csKey in controlStyle) {
                 control.style[csKey] = controlStyle[csKey]
               }
@@ -344,6 +344,12 @@ export default {
     left: 0px !important;
     top: 0px;
     border-top: none;
+    width: 55px !important;
+
+  }
+
+  .djs-palette div{
+   width: 55px !important;
   }
   .djs-container svg {
     min-height: 650px;
