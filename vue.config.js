@@ -7,7 +7,7 @@ let publicPath = '/'
 let outputDir = 'dist'
 let appFileName = 'Demo'
 if (NODE_ENV === 'demo') {
-  publicPath = '/workflow-bpmn-modeler/demo/'
+  publicPath = '/'
   outputDir = 'docs/demo'
   appFileName = 'Demo'
 }
@@ -17,7 +17,7 @@ if (NODE_ENV === 'cdn') {
     throw new Error(`cdn 版本 ${version} 已存在`)
   }
   //https://github.com/MaksymYaremenko3000/flowable-modeler/tree/${version}/docs/cdn/${version}/
-  publicPath = `https://github.com/MaksymYaremenko3000/flowable-modeler/tree/${version}/docs/cdn/${version}/`
+  publicPath = `/`
   outputDir = `docs/cdn/${version}`
   appFileName = 'Lib'
 }
