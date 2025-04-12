@@ -43,14 +43,29 @@ import xcrudConfig from 'xcrud/package/common/config'
 xcrudConfig.set({
   select: {
     placeholder: 'Select',
-    noDataText: 'No data',
-    noMatchText: 'No match',
-    loadingText: 'Loading...'
+    loadingText: 'Loading...',
+    noMatchText: 'No matching data',
+    noDataText: 'No data'
+  },
+  datePicker: {
+    placeholder: 'Select date',
+    startPlaceholder: 'Start time',
+    endPlaceholder: 'End time'
   },
   xtable: {
     table: {
-      emptyText: 'No Data',
-      sumText: 'Total',
+      emptyText: 'No data',
+      sumText: 'Total'
+    },
+    search: {
+      btn: {
+        searchBtn: {
+          text: 'Search'
+        },
+        resetBtn: {
+          text: 'Reset'
+        }
+      }
     },
     operate: {
       column: {
@@ -62,11 +77,13 @@ xcrudConfig.set({
     form: {
       tabs: {
         table: {
+          emptyText: 'No data',
+          sumText: 'Total',
           addConfig: {
-            text: 'Add',
+            text: 'Add'
           },
           operate: {
-            label: 'Actions',
+            label: 'Actions'
           }
         }
       }
@@ -81,7 +98,6 @@ Vue.use(ElementUI, { locale })
 new Vue({
   render: h => h(App)
 }).$mount('#app')
-
 `
 
 fs.writeFileSync('./src/main.js', mainFileStr)
