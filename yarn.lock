@@ -14827,7 +14827,7 @@ __metadata:
     vue: "npm:^2.6.10"
     vue-i18n: "npm:^11.1.3"
     vue-template-compiler: "npm:^2.6.11"
-    xcrud: "file:./packages/xcrud"
+    xcrud: "workspace:*"
   languageName: unknown
   linkType: soft
 
@@ -14912,19 +14912,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"xcrud@file:./packages/xcrud::locator=workflow-bpmn-modeler%40workspace%3A.":
-  version: 0.4.1
-  resolution: "xcrud@file:./packages/xcrud#./packages/xcrud::hash=2e7c6b&locator=workflow-bpmn-modeler%40workspace%3A."
-  dependencies:
-    element-ui: "npm:^2.13.2"
-    lodash.clonedeep: "npm:^4.5.0"
-    lodash.merge: "npm:^4.6.2"
-    vue: "npm:^2.6.11"
-  checksum: 10c0/76348cf6678322fef3608f48f0e2094fcc855ab81890c920e3f3174c77dfec3717b0a5f31718f3bb54453d7e1842c5bdf027e9ba6edd57184af87af217c6944d
-  languageName: node
-  linkType: hard
-
-"xcrud@workspace:packages/xcrud":
+"xcrud@workspace:*, xcrud@workspace:packages/xcrud":
   version: 0.0.0-use.local
   resolution: "xcrud@workspace:packages/xcrud"
   dependencies:
